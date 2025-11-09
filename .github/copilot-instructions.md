@@ -6,7 +6,7 @@ This repository contains GitHub Copilot customization files including custom ins
 
 ## Purpose
 
-- Standardize AI assistance across the team
+- Standardize AI assistance
 - Provide specialized chat modes for different development roles
 - Create reusable prompt templates for common tasks
 - Maintain consistent coding standards and best practices
@@ -38,8 +38,6 @@ This repository contains GitHub Copilot customization files including custom ins
 ```
 
 ## Best Practices
-
-- Reference shared standards via Markdown links (avoid duplication)
 - Keep instruction files under 2 pages
 - Use YAML frontmatter for configuration
 - Test prompt files before committing
