@@ -1,0 +1,103 @@
+/* Modern background-color demo using semantic tokens and theme overrides */
+:root{
+  /* Base tokens */
+  --white: #ffffff;
+  --black: #000000;
+
+  /* Neutral scale (light theme defaults) */
+  --neutral-0: #ffffff;
+  --neutral-1: #f8fafc;
+  --neutral-2: #f1f5f9;
+  --neutral-3: #e2e8f0;
+  --neutral-8: #0f172a;
+
+  /* Accent & semantic colors */
+  --accent-500: #2563eb; /* blue-600 */
+  --success-500: #16a34a; /* green-600 */
+  --danger-500: #dc2626;  /* red-600 */
+
+  /* Semantic background tokens (light defaults) */
+  --bg-surface: var(--neutral-0);
+  --bg-muted: var(--neutral-1);
+  --bg-accent: var(--accent-500);
+  --bg-success: var(--success-500);
+  --bg-danger: var(--danger-500);
+
+  --text-primary: #0f172a; /* near-black */
+  --text-on-accent: var(--white);
+
+  --radius: 8px;
+}
+
+/* Respect user preference; override tokens for dark theme */
+@media (prefers-color-scheme: dark){
+  :root{
+    --neutral-0: #0b1220; /* page background in dark */
+    --neutral-1: #0f172a; /* surface */
+    --neutral-2: #111827;
+    --neutral-3: #1f2937;
+
+    --bg-surface: var(--neutral-1);
+    --bg-muted: color-mix(in srgb, var(--neutral-1) 80%, #111827 20%);
+    --text-primary: #e6eef8;
+    --text-on-accent: #0b1220;
+  }
+}
+
+/* Attribute-based theme override by toggle */
+:root[data-theme='dark']{
+  --neutral-0: #0b1220;
+  --neutral-1: #0f172a;
+  --neutral-2: #111827;
+  --neutral-3: #1f2937;
+  --bg-surface: var(--neutral-1);
+  --bg-muted: color-mix(in srgb, var(--neutral-1) 82%, #111827 18%);
+  --text-primary: #e6eef8;
+  --text-on-accent: #0b1220;
+}
+
+/* Layout & typography */
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  line-height:1.4;
+}
+.container{max-width:980px;margin:0 auto;padding:24px}
+.site-header{padding:28px 0;border-bottom:1px solid color-mix(in srgb, var(--bg-muted) 60%, transparent 40%)}
+.lede{margin:6px 0 0;color:color-mix(in srgb,var(--text-primary) 70%, #374151 30%);font-size:0.95rem}
+.controls{margin-top:10px}
+.theme-toggle{display:inline-flex;align-items:center;gap:8px;font-size:0.95rem}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:16px}
+.swatch{padding:18px;border-radius:var(--radius);min-height:96px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 1px 0 color-mix(in srgb,var(--text-primary) 6%, transparent)}
+.swatch__label{font-weight:600;margin-bottom:6px}
+.swatch__example{font-size:0.95rem;opacity:0.95}
+
+/* Semantic background utilities */
+.bg-surface{background: var(--bg-surface);color:var(--text-primary);border:1px solid color-mix(in srgb,var(--text-primary) 6%, transparent)}
+.bg-muted{background: var(--bg-muted);color:var(--text-primary)}
+.bg-accent{background: var(--bg-accent);color:var(--text-on-accent)}
+.bg-success{background: var(--bg-success);color:var(--text-on-accent)}
+.bg-danger{background: var(--bg-danger);color:var(--text-on-accent)}
+
+/* Decorative gradient demonstrating layered overlays */
+.bg-gradient{background-image: linear-gradient(135deg, color-mix(in srgb,var(--accent-500) 70%, #ffffff 30%), color-mix(in srgb,var(--success-500) 70%, #ffffff 30%)); color:var(--text-on-accent)}
+
+/* Image background with overlay (useful for hero) */
+.bg-image{background-image: linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.08)), url('https://images.unsplash.com/photo-1503264116251-35a269479413?q=80&w=1400&auto=format&fit=crop&s=7a8d0d6b1c3f'); background-size:cover;background-position:center;color:var(--white)}
+
+/* Simple utilities */
+.bg-plain{background:transparent;color:var(--text-primary);border:1px dashed color-mix(in srgb,var(--text-primary) 8%, transparent)}
+.bg-soft-border{background:var(--bg-surface);border:1px solid color-mix(in srgb,var(--text-primary) 6%, transparent)}
+
+/* Focus & accessibility helpers */
+a:focus, button:focus, input:focus{outline:3px solid color-mix(in srgb,var(--accent-500) 30%, var(--bg-surface) 70%);outline-offset:2px}
+
+/* Small responsive tweaks */
+@media (max-width:560px){
+  .container{padding:16px}
+  .swatch{padding:14px}
+}
