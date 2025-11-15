@@ -31,15 +31,6 @@ description: "Core CSS architecture standards - specificity, tokens, naming, lay
 * Reference **palette tokens** only from semantic token definitions (e.g., `--color-blue-600`)
 * Modern approach: `@property` rule for type-safe tokens with animation support (fully supported 2024)
 
-```css
-/* Type-safe token with @property */
-@property --spacing-unit {
-  syntax: '<length>';
-  inherits: true;
-  initial-value: 0.25rem;
-}
-```
-
 **Naming Conventions**
 * `c-*` — Component blocks (BEM style: `.c-button`, `.c-button__icon`, `.c-button--large`)
 * `o-*` — Layout objects (e.g., `.o-grid`, `.o-stack`, `.o-cluster`)
@@ -139,13 +130,12 @@ description: "Core CSS architecture standards - specificity, tokens, naming, lay
 **Repo Structure (Conceptual)**
 ```
 styles/
-├── 00-reset/
-├── 01-base/
-├── 02-tokens/
-├── 03-utilities/
-├── 04-objects/
-├── 05-components/
-└── 06-overrides/
+├── foundation/  # Reset, normalizebox-sizing
+├── tokens/    # Design tokens (colors, spacing, typography)
+├── utilities/ # Single-purpose classes (.flex, .mt-4)
+├── layouts/  # Page-level layout patterns
+├── components/  # Reusable UI components
+└── pages/  # Page-specific styles(if needed)
 ```
 
 **Performance Budgets**
