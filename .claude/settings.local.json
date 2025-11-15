@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(test:*)"
+      "Bash(test:*)",
+      "Bash(mkdir:*)",
+      "Bash(python scripts/css-specificity-checker.py:*)"
     ],
     "deny": [],
     "ask": []
