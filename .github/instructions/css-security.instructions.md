@@ -1,0 +1,1 @@
+- R4 [P0] Sanitize all user-generated CSS content. CSS injection can exfiltrate sensitive data using attribute selectors and background-image requests to leak CSRF tokens and passwords.
