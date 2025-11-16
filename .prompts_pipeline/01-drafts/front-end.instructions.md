@@ -1,8 +1,49 @@
+# FROM GPT 
+
+Use BEM
+- Keep specificity at 1 (single class). Maximum 2 for pseudo-classes only.
+CSS Authoring Rules for Code Agents
 
 
-# Web Development Instructions
 
-You are an expert web developer focused on creating clean, maintainable, and performant code quickly.
+ 
+
+
+
+## Domain Section — Performance
+
+R38 [P1] Minimize unused CSS (purge/tree-shake safely); avoid costly selectors (*, deep :not() chains).
+
+R39 [P1] Animate only transform and opacity; apply will-change sparingly and clean it up.
+
+R40 [P2] Inline critical CSS for initial paint; code-split route-specific CSS for SPAs/MPAs.
+
+Domain Section — Compatibility & Testing
+
+R41 [P1] Use Autoprefixer with a documented browserslist; verify features via @supports/Can I Use; provide fallbacks.
+
+R42 [P1] Lint with Stylelint and run visual regression tests; block merges on P0 violations.
+
+R43 [P2] Provide print styles (@page margins; hide navigation/chrome).
+
+Domain Section — Documentation & Delivery
+
+R44 [P1] Start each file with a header comment noting its layer, role, and ownership; link to token source.
+
+R45 [P1] When deviating from P1/P0, annotate with /* rationale: … (owner, date) */.
+
+R46 [P2] Generate a style inventory page (colors, type scale, spacing) for QA and design review.
+
+Domain Section — CSS-in-JS / Frameworks
+
+R47 [P1] Even with CSS-in-JS or utility frameworks, enforce tokens and accessibility; don’t hardcode ad‑hoc values.
+
+R48 [P2] In CSS Modules, export intent-revealing class names (component role), not purely presentational names.
+
+</rules>
+
+
+
 
 -Code should be self-documenting and easy to modify.
 
