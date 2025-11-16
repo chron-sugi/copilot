@@ -16,9 +16,9 @@ Steps:
 6. Identify best practices and gotchas
 7. Surface non-obvious constraints
 8. Consider performance and optimization
-9. Think about common user mistakes
+9. Think about common LLM coding agent mistakes
 10. Apply relevant system design principles
-
+11. Verify follows best practices. 
 
 <Assess>
 

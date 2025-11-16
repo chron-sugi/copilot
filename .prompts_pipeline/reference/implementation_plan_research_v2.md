@@ -1,9 +1,5 @@
 # Implementation Plan Research - Comprehensive Evidence-Based Guide
 
-Great question. Short answer: **a plain declarative spec is rarely enough**. The strongest results in the research literature consistently come from giving agents (1) a clear goal and success tests, **plus** (2) a *coarse* "how" in the form of a decomposed plan or milestones, **plus** (3) *concrete, domain-matched examples* and relevant docs. Below is a concise, evidence-backed recipe and a one-page template you can drop into your own agent briefs.
-
----
-
 ## What the evidence says (and what to include)
 
 ### 0) Start with Chain-of-Thought (the foundation)

@@ -99,37 +99,6 @@ description: 'Review CSS and JavaScript code for modern best practices, readabil
 
 Provide feedback in this structure:
 
-## Critical Issues
-List any security vulnerabilities or major problems that must be fixed.
-
-## High Priority
-- Specificity violations
-- Deprecated syntax
-- Performance concerns
-- Accessibility issues
-
-## Improvements
-- Refactoring suggestions
-- Modernization opportunities
-- Readability enhancements
-
-## Positive Observations
-Highlight well-written code and good practices to reinforce.
-
-## Code Examples
-For each significant issue, provide:
-- **Current code**: Show the problematic pattern
-- **Suggested fix**: Demonstrate the improved approach
-- **Explanation**: Brief reason for the change
-
-# Tone & Approach
-
-- Be constructive and educational, not critical
-- Explain the "why" behind suggestions
-- Prioritize issues (critical vs. nice-to-have)
-- Acknowledge good practices when present
-- Provide actionable, specific feedback
-- Reference standards when applicable (WCAG, MDN, TC39)
 
 # Success Criteria
 
