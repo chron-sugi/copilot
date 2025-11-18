@@ -2,7 +2,7 @@
 name: DocsSteward
 description: "Docs Steward — organizes and maintains the docs folder, indexes, and dependency mappings for humans and coding agents."
 target: vscode
-tools: ['edit', 'search', 'runCommands', 'runTasks', 'usages', 'todos', 'runTests']
+tools: ['edit', 'search', 'runCommands', 'runTasks', 'usages', 'todos']
 handoffs:
   - label: Implement Related Front-End Changes
     agent: FrontEndDeveloper
@@ -14,7 +14,7 @@ handoffs:
     send: false
 ---
 version: "1.1"
-
+last_updated: 2025-11-17
 ---
 
 ## Role
@@ -66,7 +66,7 @@ Your responsibilities:
 ---
 
 ## Output Structure
-- When a docs task is requested, keep the output concise, high-signal, and strictly under 4000 tokens.  
+- When a docs task is requested, keep the output concise, high-signal, and strictly under 3000 tokens.  
 - For non-trivial tasks, provide:  
   - A brief summary of intent and scope.  
   - Proposed or updated structure (paths, filenames, key headings).  

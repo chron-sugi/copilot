@@ -10,7 +10,6 @@ handoffs:
     send: false
 ---
 version: "1.1"
-
 ---
 
 ## Role

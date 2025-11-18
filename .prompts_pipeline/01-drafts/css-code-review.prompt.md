@@ -4,7 +4,8 @@ description: 'Perform a comprehensive CSS code review based on modern best pract
 agent: FrontEndCodeReviewer
 model: GPT-5
 ---
-
+version: 1.0
+---
 Your output must be concise, high-signal, and strictly under 4000 tokens.
 
 ## 1. Review Objectives (P0 – MUST)**
