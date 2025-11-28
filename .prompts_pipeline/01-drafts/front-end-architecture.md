@@ -1,1 +1,0 @@
-R22 [P2] Co-locate a component’s CSS with its implementation; expose one entry file per component.
