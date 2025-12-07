@@ -9,7 +9,8 @@ handoffs:
     prompt: Perform code review #file:.github/prompts/css-code-review.prompt.md
     send: true
 ---
-
+version: 2.1
+---
 ## P0 — Critical Rules
 
 - Ask clarifying questions if requirements are ambiguous rather than making significant assumptions.
@@ -45,27 +46,47 @@ handoffs:
 - Use `async/await` with typed promises and explicit error handling. 
 
 ## Project Structure
+
+Follow **Feature Sliced Design (FSD)** architecture. Layers are ordered by abstraction level; higher layers can only import from lower layers.
+
 ```
 src/
-├── features/{feature}/
-│   ├── components/
-│   ├── hooks/
-│   ├── api.ts                 # Feature-specific endpoints
-│   ├── {feature}.types.ts
-│   ├── {feature}.constants.ts
-│   └── index.ts               # Public exports
-├── components/                # Shared components
-├── hooks/                     # Shared hooks
-├── lib/
-│   ├── api/                   # Shared API clients
-│   └── utils/                 # Utilities, config
-├── stores/                    # Zustand stores
-└── types/                     # Global types
+├── app/           # App entry, providers, global styles, routing setup
+├── pages/         # Route-level components (compose widgets/features)
+├── widgets/       # Large composite UI blocks (e.g., Header, Sidebar)
+├── features/      # User interactions and business actions (e.g., AuthForm, AddToCart)
+├── entities/      # Business entities with UI, model, and API (e.g., User, Product)
+├── shared/        # Reusable utilities, UI kit, API client, config, types
+│   ├── ui/        # Design-system primitives (Button, Input, Modal)
+│   ├── lib/       # Utilities (cn, formatDate, validators)
+│   ├── api/       # Fetch client, request/response types
+│   └── config/    # Environment, constants
 ```
 
+**Layer Rules:**
+- `app` → can import from all layers
+- `pages` → widgets, features, entities, shared
+- `widgets` → features, entities, shared
+- `features` → entities, shared
+- `entities` → shared only
+- `shared` → no internal cross-imports between slices
+
+**Slice Structure** (features, entities, widgets):
+```
+feature-name/
+├── ui/            # React components
+├── model/         # Zustand store, hooks, types
+├── api/           # Data fetching (TanStack Query hooks)
+├── lib/           # Slice-specific utilities
+└── index.ts       # Public API (barrel export)
+```
+
+**Guidelines:**
 - Colocate tests with source files (`Button.tsx` → `Button.test.tsx`).
-- Place new features in `features/`; promote to shared only when reused across 2+ features.
+- Create new slices in `features/` for user actions; use `entities/` for domain objects.
+- Promote to `shared/` only when reused across 2+ slices.
 - Extend existing files for related functionality; create new files only for distinct concerns or when a file exceeds ~200 lines.
+- Import from slices only via their `index.ts` public API — never reach into internal folders.
 
 ## Naming
 
