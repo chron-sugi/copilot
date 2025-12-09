@@ -4,157 +4,182 @@ Here are the instructions:
 
 **Task**
 
-Add rejection list filtering to the normalization pipeline, create the stewardship folder structure, and create an archive utility for processed queues.
+Assess the codebase for separation of concerns between domain-specific and non-domain (generic) components. Identify entanglement between OS-specific code and reusable generic code. Evaluate what refactoring would be needed to enable reuse for other domains.
 
-**Part 1: Create stewardship folder structure**
+Do not make any changes. Only analyze and report.
 
-**Step 1: Create folder structure**
+**Background**
 
-Create the following folders under data/stewardship/:
+The goal is to have generic components that can be reused across domains (OS, software, hardware, etc.) and domain-specific components that contain the unique logic for each domain.
 
-data/stewardship/archive/
+Generic components should have no knowledge of OS, vendors, families, or any domain concepts.
 
-data/stewardship/rejection_lists/
+Domain-specific components should use generic components and add domain-specific behavior.
 
-data/stewardship/provisional/
+**Step 1: Identify all modules and their current location**
 
-**Step 2: Create initial rejection list file**
+List all modules in the package.
 
-Create an empty os_rejection_list.csv in data/stewardship/rejection_lists/.
+For each module, note:
 
-Columns: raw_os_string, rejection_reason, rejected_date
+- Module name
+- Current folder location
+- Brief description of what it does
 
-Leave it empty for now. It will be populated during stewardship review.
+**Step 2: Classify each module**
 
-**Step 3: Add paths to settings.yaml**
+For each module, classify as:
 
-Add stewardship paths to settings.yaml under a stewardship key:
+**Generic (non-domain):**
 
-stewardship_queue_path: path to stewardship_queue.json
+- Could be used for any domain without modification
+- No references to OS, vendor, family, edition, or other OS concepts
+- Examples: token matching, canonical name building, file I/O utilities
 
-archive_path: path to archive folder
+**Domain-specific (OS):**
 
-rejection_list_path: path to os_rejection_list.csv
+- Contains OS-specific logic or models
+- References OS concepts like vendor, family, edition, version
+- Examples: OS matcher, OS taxonomy registry, OS catalog models
 
-provisional_path: path to provisional folder
+**Mixed (entangled):**
 
-Use relative paths consistent with existing path conventions.
+- Contains both generic logic and domain-specific references
+- Could be split into generic and domain parts
 
-**Part 2: Add rejection list filtering**
+**Step 3: Analyze imports and dependencies**
 
-**Step 4: Create rejection list loader**
+For each module, list what it imports.
 
-Create a utility function or class to load the rejection list.
+Identify cross-references:
 
-Location: Could be in stewardship folder or a utils module.
+- Does a generic module import domain-specific code? (problem)
+- Does a domain-specific module import generic code? (correct)
+- Do domain modules import from each other? (may be fine)
 
-Function: load_rejection_list(path) returns a set of raw_os_strings that are rejected.
+Flag any generic modules that have domain-specific imports. These are entanglement points.
 
-Load the CSV file. Extract raw_os_string column. Return as a set for fast lookup.
+**Step 4: Analyze models and data classes**
 
-If file is empty or does not exist, return empty set.
+List all Pydantic models and data classes.
 
-**Step 5: Update normalization pipeline to filter rejections**
+For each, classify as generic or domain-specific.
 
-In the normalization pipeline, after matching is complete and before writing to stewardship queue:
+Identify any models that mix generic fields with domain-specific fields.
 
-Load the rejection list using the loader.
+**Step 5: Analyze functions and methods**
 
-Filter the incomplete matches dataframe.
+For key modules, examine functions and methods.
 
-Remove any rows where raw_os_string is in the rejection list.
+Identify any that:
 
-Only write non-rejected incomplete matches to stewardship_queue.json.
+- Have generic logic but domain-specific parameter names
+- Have hardcoded domain values
+- Could be made generic with parameter changes
 
-**Step 6: Log rejection filtering**
+**Step 6: Identify entanglement patterns**
 
-Log how many items were filtered out due to rejection list.
+Report specific entanglement issues found:
 
-Example: “Filtered 15 rejected OS strings from stewardship queue”
+Pattern A: Generic module imports domain module
 
-**Part 3: Create archive utility**
+- Which modules?
+- What is imported?
 
-**Step 7: Create archive function**
+Pattern B: Generic function has domain-specific parameters
 
-Create a utility function to archive the processed stewardship queue.
+- Which functions?
+- What parameters?
 
-Location: Could be in stewardship folder or a utils module.
+Pattern C: Generic class has domain-specific attributes
 
-Function: archive_stewardship_queue(queue_path, archive_path)
+- Which classes?
+- What attributes?
 
-**Step 8: Implement archive logic**
+Pattern D: Domain logic embedded in generic code
 
-Check if stewardship_queue.json exists. If not, log and return.
+- Where?
+- What logic?
 
-Generate a timestamp string. Format: YYYYMMDD_HHMMSS
+**Step 7: Assess current folder structure**
 
-Create archive filename: stewardship_queue_YYYYMMDD_HHMMSS.json
+Current structure has:
 
-Copy the queue file to archive folder with timestamped name.
+- matching/ (generic?)
+- matching/os/ (domain-specific)
+- config/os/ (domain-specific)
+- catalog/ (generic or domain?)
+- others?
 
-Delete or clear the original queue file.
+Evaluate if folder structure supports separation.
 
-Log the archive action: “Archived stewardship queue to stewardship_queue_20241215_143022.json”
+Identify modules in wrong location.
 
-**Step 9: Create archive script or CLI command**
+**Step 8: Propose target architecture**
 
-Create a simple script that can be run manually to archive the queue.
+Describe ideal structure:
 
-Takes no arguments. Uses paths from settings.yaml.
+```
+canonix/
+├── core/                    # Generic, reusable
+│   ├── matching/
+│   ├── catalog/
+│   ├── builders/
+│   └── utils/
+├── domains/
+│   └── os/                  # OS-specific
+│       ├── config/
+│       ├── matching/
+│       ├── models/
+│       └── pipeline/
+```
 
-User runs it after completing stewardship review.
+Or whatever structure makes sense based on findings.
 
-Example: python -m canonix.stewardship.archive_queue
+**Step 9: List refactoring tasks**
 
-Or a simple script: scripts/archive_stewardship_queue.py
+For each entanglement found, describe:
 
-**Part 4: Testing**
+- What needs to change
+- Estimated complexity (small, medium, large)
+- Dependencies or risks
 
-**Step 10: Test rejection list filtering**
+Prioritize: What gives most reuse value with least effort?
 
-Create a test rejection list with a few raw_os_strings.
+**Step 10: Identify reusable components for other domains**
 
-Run normalization pipeline with data that includes rejected strings.
+List components that would be immediately reusable for a new domain (e.g., software cataloging):
 
-Verify rejected strings do not appear in stewardship_queue.json.
+- TokenMatcher
+- CanonicalBuilder
+- CatalogRepository
+- Others?
 
-Verify non-rejected incomplete matches do appear.
+List components that need refactoring before reuse:
 
-**Step 11: Test archive utility**
+- What changes needed?
 
-Create a test stewardship_queue.json with sample data.
+List components that are inherently domain-specific:
 
-Run the archive function.
+- Will need equivalent for each domain
 
-Verify file is moved to archive folder with timestamp.
+**Report format**
 
-Verify original queue is cleared or deleted.
+Provide a summary report with:
 
-**Step 12: Test empty rejection list**
-
-Run with empty rejection_list.csv.
-
-Verify pipeline still works.
-
-Verify all incomplete matches go to stewardship queue.
-
-**Step 13: Test missing rejection list**
-
-Delete or rename the rejection list file.
-
-Run pipeline.
-
-Verify pipeline handles gracefully (empty set, no filtering).
-
-Log warning that rejection list not found.
+1. Module classification table (module, location, classification)
+1. Entanglement issues found
+1. Proposed target architecture
+1. Refactoring task list with priorities
+1. Reusability assessment
 
 **Rules**
 
-Work one step at a time. Show me after each step. Keep utilities simple and focused. Use existing path conventions from settings.yaml.
+Be thorough. Check every module. Do not assume based on folder location. Look at actual code and imports. Report findings clearly with specific examples.
 
 **Do not**
 
-Do not automate the full stewardship workflow yet. Only add rejection filtering and archive utility. Do not create frontend or review UI. That is a future phase.
+Do not make any changes. Do not refactor anything. Only analyze and report. Changes will be planned based on your findings.
 
 -----
 
