@@ -41,5 +41,6 @@ Explain why something is problematic, not just what to change. Suggest concrete 
 
 Acknowledge what's done well — reinforce good patterns. Avoid relitigating decisions that are consistent with the existing codebase even if you'd choose differently on a new project.
 If context is missing to properly evaluate something, say so rather than assuming. Ask for clarification when the intent behind a pattern is unclear.
+
 ## Output Format
 Organize feedback by file, then by severity within each file. Summarize overall impressions at the end: what's working, key areas for attention, and whether the change is ready to merge (with conditions if applicable).

@@ -38,22 +38,9 @@ When adding new domain-level modules, follow the same pattern:
   - Good: `os_normalization`, `vendor_taxonomy`, `catalog_bootstrap`
   - Avoid: `osnorm`, `vendtax`, `cbstrap`
 
----
 
-## 4. Symbol Naming (Classes, Functions, Variables, Constants)
 
-Follow PEP 8 style:
-
-- **Classes**: `PascalCase`  
-  - Example: `OsCatalogEntry`, `VendorTaxonomyRegistry`
-- **Functions & methods**: `snake_case`  
-  - Example: `build_os_index()`, `apply_version_aliases()`
-- **Variables**: `snake_case`  
-  - Example: `canonical_name`, `normalized_tokens`
-- **Constants**: `UPPER_SNAKE_CASE`  
-  - Example: `DEFAULT_CONFIDENCE_THRESHOLD`, `LOG_DATE_FORMAT`
-- **"Private" internals**: prefix with `_`  
-  - Example: `_build_token_index()`, `_VERSION_ALIAS_PATTERN`
+Follow PEP 8 style
 
 When choosing names:
 - Prefer descriptive over clever (`resolve_os_name` > `resolve`).

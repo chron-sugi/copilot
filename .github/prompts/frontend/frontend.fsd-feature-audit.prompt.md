@@ -31,11 +31,7 @@ FSD layers (top → bottom):
 - `src/shared`    – generic, reusable ui/lib/api/config/model/assets.
 - `src/types`     – global, cross-cutting TypeScript types.
 
-### What a “feature” is
-
-A **feature** represents a **user-facing capability / flow**, not just a data type:
-
-- Examples: `auth`, `spl-editor`, `dashboard-filters`, `change-password`, `export-results`.
+A **feature** represents a **user-facing capability / flow**,
 
 ---
 
