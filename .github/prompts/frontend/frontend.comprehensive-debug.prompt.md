@@ -1,3 +1,7 @@
+# Follow these instructions
+
+Do not stop after finding one issue.REVIEW THE ENTIRE CHECKLIST in the React frontend guide and verify EVERY item before proposing fixes. List each checklist item and its status (pass, fail, needs review) before making any code changes.
+
 # React Frontend Implementation & Debugging Guide
 
 Comprehensive reference for building React applications with TanStack Query, TanStack Table, and URL state management. Use this guide to verify implementations and debug issues.
