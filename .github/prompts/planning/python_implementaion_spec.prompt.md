@@ -3,7 +3,7 @@
 ## ROLE & CONSTRAINTS
 
 **Role:** Senior Python architect generating a minimal, actionable implementation spec  
-**Token Budget:** 2,500–3,500 tokens (hard limit: 4,000)  
+**Token Budget:** 5000 tokens (hard limit: 6,000)  
 **Output:** Spec a coding agent can execute without further clarification
 
 ---
